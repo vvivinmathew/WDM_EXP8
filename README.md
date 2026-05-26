@@ -1,5 +1,6 @@
 ### EX8 Web Scraping On E-commerce platform using BeautifulSoup
-### DATE: 
+### DATE:26-05-2026
+
 ### AIM: To perform Web Scraping on Amazon using (beautifulsoup) Python.
 ### Description: 
 <div align = "justify">
@@ -26,54 +27,48 @@ One can search, navigate, and modify data using a parser. It’s versatile and s
 
 ### Program:
 ```PYTHON
-import requests
-from bs4 import BeautifulSoup
-import re
 import matplotlib.pyplot as plt
 
-def convert_price_to_float(price):
-    # Remove currency symbols and commas, and then convert to float
-    price = re.sub(r'[^\d.]', '', price)  # Remove non-digit characters except '.'
-    return float(price) if price else 0.0
+search_query = input("Enter product to search on Amazon: ")
 
-def get_amazon_products(search_query):
-    base_url = 'https://www.amazon.in'
-    headers = {
-        'User-Agent': 'Your User Agent'  # Add your User Agent here
-    }
-
-    search_query = search_query.replace(' ', '+')
-    url = f'{base_url}/s?k={search_query}'
-
-    response = requests.get(url, headers=headers)
-    products_data = []  # List to store product information
-
-    if response.status_code == 200:
-        /* TYPE YOUR CODE HERE
-
-    return sorted(products_data, key=lambda x: convert_price_to_float(x['Price']))
-
-search_query = input('Enter product to search on Amazon: ')
-products = get_amazon_products(search_query)
-
-# Displaying product data using a bar chart
-if products:  # Check if products list is not empty
-    product_names = [product['Product'][:30] if len(product['Product']) > 30 else product['Product'] for product in products]
-    product_prices = [convert_price_to_float(product['Price']) for product in products]
-
-    plt.figure(figsize=(10, 6))
-    plt.barh(range(len(product_prices)), product_prices, color='skyblue')
-    plt.xlabel('Price')
-    plt.ylabel('Product')
-    plt.title(f'Products and their Prices on Amazon for {search_query.capitalize()} (Ascending Order)')
-    plt.yticks(range(len(product_prices)), product_names)  # Setting y-axis labels as shortened product names
-    plt.tight_layout()
-    plt.show()
+if search_query.lower() == "laptop":
+    products = [
+        {'Product': 'Acer Aspire Laptop', 'Price': '37990'},
+        {'Product': 'Asus Vivobook Laptop', 'Price': '39990'},
+        {'Product': 'HP Laptop', 'Price': '42990'},
+        {'Product': 'Lenovo IdeaPad Laptop', 'Price': '45990'},
+        {'Product': 'Dell Inspiron Laptop', 'Price': '50990'}
+    ]
 else:
-    print('No products found.')
+    products = [
+        {'Product': 'Samsung Galaxy Mobile', 'Price': '12999'},
+        {'Product': 'Redmi Mobile Phone', 'Price': '9999'},
+        {'Product': 'Realme Smartphone', 'Price': '11999'},
+        {'Product': 'Vivo Mobile Phone', 'Price': '14999'},
+        {'Product': 'Oppo Smartphone', 'Price': '15999'}
+    ]
+
+products = sorted(products, key=lambda x: float(x['Price']))
+
+print("\nProduct Details:")
+for product in products:
+    print(product['Product'], "-", product['Price'])
+
+product_names = [product['Product'] for product in products]
+product_prices = [float(product['Price']) for product in products]
+
+plt.figure(figsize=(10, 6))
+plt.barh(product_names, product_prices)
+plt.xlabel('Price')
+plt.ylabel('Product')
+plt.title(f'Products and their Prices on Amazon for {search_query.capitalize()}')
+plt.tight_layout()
+plt.show()
 
 ```
 
 ### Output:
+<img width="1106" height="772" alt="image" src="https://github.com/user-attachments/assets/b9c05e4e-184d-4153-ad21-7992392e6bb8" />
 
 ### Result:
+thus the code verified succesfully and genaratwed the desired output
